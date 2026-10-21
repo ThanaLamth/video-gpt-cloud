@@ -76,4 +76,4 @@ python cases/<name>/render_vo.py
 - Slogan: Ancient Wisdom · Modern Intelligence
 - Contact: contact@kimq.tech | Facebook: KimQ
 
-*Render tren RTX 3080+ khuyen nghi. 30s video ~ 70-90s render time (6 workers).*
+*VM: RTX 5060 Ti 16GB / i7-12700K 20 cores / 28GB RAM. 30s video ~ 30-35s render time (14 workers).*

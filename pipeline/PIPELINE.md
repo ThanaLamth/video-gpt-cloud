@@ -141,7 +141,7 @@ Xem `hooks/hook_library.json` -> truong `sfx_style` cua hook da chon.
 $py = "C:\Users\admin\AppData\Local\Programs\Python\Python312\python.exe"
 & $py scripts/render.py cases/<name>/<name>.html `
     --out cases/<name>/draft.mp4 `
-    --width 1080 --height 1920 --dur 30 --workers 6 --crf 22
+    --width 1080 --height 1920 --dur 30 --workers 14 --crf 22
 ```
 
 > Render ~158s cho 900 frames voi 6 workers.
@@ -291,7 +291,7 @@ $ff = "C:\Users\admin\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Micros
 # 1. Final render voi audio mix
 & $py scripts/render.py cases/<name>/<name>.html `
     --out cases/<name>/<name>_nosub.mp4 `
-    --width 1080 --height 1920 --dur 30 --workers 6 --crf 22 `
+    --width 1080 --height 1920 --dur 30 --workers 14 --crf 22 `
     --sfx cases/<name>/audio_mix.wav
 
 # 2. Burn subtitles
@@ -401,13 +401,13 @@ $py = "C:\Users\admin\AppData\Local\Programs\Python\Python312\python.exe"
 # Intro 3s
 & $py scripts/render.py cases/kimc-brand/kimc-intro.html `
     --out cases/kimc-brand/draft_intro.mp4 `
-    --width 1080 --height 1920 --dur 3 --workers 6 --crf 22 `
+    --width 1080 --height 1920 --dur 3 --workers 14 --crf 22 `
     --sfx cases/kimc-brand/sfx_intro.wav
 
 # Outro 6s (sau khi intro xong)
 & $py scripts/render.py cases/kimc-brand/kimc-outro.html `
     --out cases/kimc-brand/draft_outro.mp4 `
-    --width 1080 --height 1920 --dur 6 --workers 6 --crf 22 `
+    --width 1080 --height 1920 --dur 6 --workers 14 --crf 22 `
     --sfx cases/kimc-brand/sfx_outro.wav
 ```
 
