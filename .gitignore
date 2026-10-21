@@ -1,0 +1,20 @@
+# Render outputs (large binary files)
+*.mp4
+*.wav
+*.srt
+*.ass
+_frames/
+*.render.json
+
+# Voice reference (private)
+ref_voice*.wav
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

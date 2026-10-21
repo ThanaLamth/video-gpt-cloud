@@ -1,0 +1,370 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-10-20",
+  "note": "18 hook archetypes cho short-form video KimQ. Moi hook co template tieng Viet, visual style, SFX, va content-type mapping.",
+  "hooks": [
+    {
+      "id": "CONTRARIAN",
+      "name_vi": "Phan nghich / Dao lon su that",
+      "category": "cognitive",
+      "description_vi": "Bat dau bang tuyen bo di nguoc niem tin pho bien. Tao friction nhan thuc ngay tu giay dau.",
+      "template_vi": "[Dieu mo nguoi nghi la dung]. Sai hoan toan. / Hau het [nhom] dang [lam X]. Do la ly do ho [ket qua te].",
+      "visual_style": "Text lon xuat hien tung tu — mau do hoac gold. Strike-through animation -> dung su that hien ra.",
+      "sfx_style": "Buzz/error sound -> silence -> clean reveal tone",
+      "hook_duration_s": 3,
+      "opening_frame": "Single bold word on dark screen",
+      "best_for": ["educational", "trend_opinion", "comparison"],
+      "backup_for": ["problem_solution", "brand_story"],
+      "examples_vi": [
+        "AI khong thong minh hon ban. No chi nhanh hon.",
+        "Lam nhieu hon khong phai luc nao cung tot hon.",
+        "Hau het cong ty dang dau tu vao AI sai cach."
+      ]
+    },
+    {
+      "id": "CURIOSITY_GAP",
+      "name_vi": "Khoang trong to mo",
+      "category": "cognitive",
+      "description_vi": "Tiet lo mot phan thong tin, tao cau hoi trong dau nguoi xem ma chi xem tiep moi co cau tra loi.",
+      "template_vi": "Co mot [dieu/cach/bi mat] ma [nhom] khong muon ban biet. / [X] lam duoc dieu nay nho [goi y mo ho]. Day la cach.",
+      "visual_style": "Thong tin bi che/blur -> reveal tung phan. Progress bar chay. Dau cham hoi animation.",
+      "sfx_style": "Low tension hum -> rising frequency -> abrupt cut to silence",
+      "hook_duration_s": 3,
+      "opening_frame": "Blurred or masked text/number",
+      "best_for": ["educational", "case_study", "trend_opinion"],
+      "backup_for": ["product_demo", "how_to"],
+      "examples_vi": [
+        "Co mot loai AI ma gan nhu khong ai o Viet Nam dang dung dung cach.",
+        "Con so nay khien chung toi phai lam lai toan bo san pham.",
+        "Bi mat phia sau nhung doi nhom lam viec hieu qua x3."
+      ]
+    },
+    {
+      "id": "PATTERN_INTERRUPT",
+      "name_vi": "Ngat nhip / Gay soc thi giac",
+      "category": "visual",
+      "description_vi": "Visual hoac am thanh cuc ky bat ngo trong 0.5 giay dau. Nao dung scroll vi khong nhan ra pattern.",
+      "template_vi": "[Khong can text hook — visual IS the hook]. Sau 0.5s shock moi xuat hien context.",
+      "visual_style": "Flash trang/gold fullscreen -> sudden cut to dark -> element xuat hien. Hoac glitch animation. Zoom dot ngot.",
+      "sfx_style": "Hard cut silence -> sudden impact boom -> settle",
+      "hook_duration_s": 2,
+      "opening_frame": "Full-screen flash or unexpected visual — no text",
+      "best_for": ["product_demo", "brand_story", "trend_opinion"],
+      "backup_for": ["how_to", "case_study"],
+      "examples_vi": [
+        "Man hinh gold flash 0.3s -> toi den -> 1 so dem nguoc",
+        "Zoom in cuc nhanh vao 1 chi tiet -> pull back reveal toan canh"
+      ]
+    },
+    {
+      "id": "FEAR_LOSS",
+      "name_vi": "So mat mat / FOMO",
+      "category": "emotional",
+      "description_vi": "Khai thac noi so bi bo lai phia sau, mat co hoi, hoac rui ro cu the.",
+      "template_vi": "Neu ban khong [lam X] truoc [moc thoi gian], [hau qua cu the]. / [X% nguoi] da mat [Y] vi khong biet dieu nay.",
+      "visual_style": "Countdown timer. Thanh progress can dan. Color shift tu gold -> red. Cac doi thu canh tranh vuot len.",
+      "sfx_style": "Ticking clock -> alarm -> resolve",
+      "hook_duration_s": 3,
+      "opening_frame": "Counter or timer element",
+      "best_for": ["problem_solution", "trend_opinion", "educational"],
+      "backup_for": ["case_study", "comparison"],
+      "examples_vi": [
+        "Doi thu cua ban dang dung AI de lam viec nhanh hon 3 lan. Ban thi chua.",
+        "Nam ngoai, 70% doanh nghiep khong dung AI da mat thi phan.",
+        "Trong luc ban doc tin nay, doi nhom cua ho da xong viec roi."
+      ]
+    },
+    {
+      "id": "SOCIAL_PROOF",
+      "name_vi": "Bang chung xa hoi",
+      "category": "credibility",
+      "description_vi": "Con so, danh gia, logo khach hang, hoac ket qua cu the tao trust ngay lap tuc.",
+      "template_vi": "[X] [doi nhom/nguoi dung/cong ty] dang dung dieu nay de [ket qua]. / Tu [X] -> [Y] trong [thoi gian].",
+      "visual_style": "Counter odometer tang len. Logo wall. Testimonial quote card pop-in. Chart tang truong.",
+      "sfx_style": "Counting/ticking up -> ding/success sound at peak number",
+      "hook_duration_s": 3,
+      "opening_frame": "Large number counting up",
+      "best_for": ["case_study", "product_demo", "brand_story"],
+      "backup_for": ["educational", "comparison"],
+      "examples_vi": [
+        "500 doi nhom da rut ngan thoi gian hop xuong con 15 phut.",
+        "Tu 40 gio/tuan -> 12 gio. Cung ket qua. Khac cach lam."
+      ]
+    },
+    {
+      "id": "TRANSFORMATION",
+      "name_vi": "Bien doi / Truoc - Sau",
+      "category": "emotional",
+      "description_vi": "Hien trang dau -> ket qua khao khat. Tao bridge giua vi tri hien tai va vi tri muon den.",
+      "template_vi": "Truoc: [pain state]. Sau khi dung [X]: [dream state]. / [Thoi gian] truoc, [van de]. Hom nay, [ket qua].",
+      "visual_style": "Split screen before/after. Timeline chay voi milestone points. Color shift tu gray -> gold.",
+      "sfx_style": "Low drone -> build up -> bright resolution chord",
+      "hook_duration_s": 4,
+      "opening_frame": "Split or before/after layout",
+      "best_for": ["case_study", "product_demo", "brand_story"],
+      "backup_for": ["problem_solution", "educational"],
+      "examples_vi": [
+        "Truoc: hop 3 tieng, khong ra quyet dinh. Sau: 20 phut, du du lieu, du hanh dong.",
+        "6 thang truoc team nay mat 2 tuan lam 1 report. Bay gio: 4 tieng."
+      ]
+    },
+    {
+      "id": "QUESTION",
+      "name_vi": "Cau hoi truc tiep",
+      "category": "cognitive",
+      "description_vi": "Cau hoi lam nguoi xem tu dat minh vao tinh huong. Hieu qua khi danh dung vao pain point.",
+      "template_vi": "Ban co dang [lam X] khong? / Tai sao [nhom nguoi] luon [ket qua tot hon]? / Bao gio ban moi [muc tieu]?",
+      "visual_style": "Cau hoi xuat hien tung tu, typing effect. Dau ? dap nhe. Sau do fade -> context.",
+      "sfx_style": "Subtle typing -> question mark ding -> brief pause",
+      "hook_duration_s": 3,
+      "opening_frame": "Question text typing onto screen",
+      "best_for": ["educational", "problem_solution", "comparison"],
+      "backup_for": ["brand_story", "how_to"],
+      "examples_vi": [
+        "Bao lau roi ban chua cam thay minh lam viec thuc su hieu qua?",
+        "Tai sao team 5 nguoi nay lam duoc viec cua 20 nguoi?",
+        "Ban co biet AI dang quyet dinh dieu gi trong cong ty ban khong?"
+      ]
+    },
+    {
+      "id": "HOW_TO",
+      "name_vi": "Huong dan / Cach lam",
+      "category": "utility",
+      "description_vi": "Hua hen mot ket qua cu the voi cac buoc ro rang. Kich hoat mode hoc cua nao.",
+      "template_vi": "Cach [lam X] trong [Y phut/buoc]. / [X buoc] de [ket qua mong muon] — khong can [rao can pho bien].",
+      "visual_style": "Step counter (1/3, 2/3...) hoac progress bar. List cac buoc xuat hien dan. Checkmark animation.",
+      "sfx_style": "Clean neutral open -> step-by-step dings -> completion sound",
+      "hook_duration_s": 2,
+      "opening_frame": "Step indicator or numbered list start",
+      "best_for": ["how_to", "product_demo", "educational"],
+      "backup_for": ["case_study", "comparison"],
+      "examples_vi": [
+        "3 buoc de cat giam 60% thoi gian hop — khong can phan mem dat tien.",
+        "Cach tu dong hoa bao cao tuan trong 10 phut.",
+        "Lam the nao de AI phan tich du lieu thay ban — tung buoc."
+      ]
+    },
+    {
+      "id": "MISTAKE_WARNING",
+      "name_vi": "Canh bao loi / Dung lai",
+      "category": "emotional",
+      "description_vi": "Xac dinh mot hanh vi sai pho bien va canh bao nguoi xem. Tao ngay cam giac 'o, do la minh'.",
+      "template_vi": "Dung [lam X] ngay. / [X] loi pho bien nhat khi dung AI — va cach tranh. / Dung [X] truoc khi xem video nay.",
+      "visual_style": "Warning sign / X mark animation. Red flash -> fix reveal. Strikethrough on wrong way.",
+      "sfx_style": "Alarm/buzzer short -> silence -> soft correct tone",
+      "hook_duration_s": 2,
+      "opening_frame": "Warning icon or STOP text",
+      "best_for": ["educational", "problem_solution", "how_to"],
+      "backup_for": ["comparison", "trend_opinion"],
+      "examples_vi": [
+        "Dung dung ChatGPT theo cach nay ngay.",
+        "3 loi ma 90% nguoi moi dung AI mac phai — so 2 ton tien nhat.",
+        "Dung tu dong hoa truoc khi lam dieu nay."
+      ]
+    },
+    {
+      "id": "BOLD_CLAIM",
+      "name_vi": "Tuyen bo tao bao",
+      "category": "credibility",
+      "description_vi": "Mot tuyen bo manh, tu tin, nghe co ve qua lon nhung duoc backup boi noi dung video.",
+      "template_vi": "Day la [tinh tu manh] [danh muc] ma ban chua thu. / [X] thay doi hoan toan cach [nhom] lam viec.",
+      "visual_style": "Text lon, full screen, bold. Gold color. Minimal. Impact font. Phat no ra tu tam.",
+      "sfx_style": "Impact boom -> silence -> proud/confident tone",
+      "hook_duration_s": 2,
+      "opening_frame": "Single large bold statement",
+      "best_for": ["product_demo", "brand_story", "trend_opinion"],
+      "backup_for": ["case_study", "comparison"],
+      "examples_vi": [
+        "Day la cach lam bao cao nhanh nhat toi tung thay.",
+        "Cong cu nay dang thay doi cach hang nghin doi nhom lam viec.",
+        "AI vua lam duoc dieu ma 1 nam truoc con tuong la khong the."
+      ]
+    },
+    {
+      "id": "SECRET_INSIDER",
+      "name_vi": "Bi mat / Thong tin noi bo",
+      "category": "cognitive",
+      "description_vi": "Dinh vi thong tin nhu 'it nguoi biet', tao cam giac dac quyen cho nguoi xem.",
+      "template_vi": "Chi [X%] nguoi biet dieu nay. / Dieu [cong ty/chuyen gia] khong noi voi ban ve [chu de].",
+      "visual_style": "Classified/secret file reveal animation. Lock unlocking. Frosted glass clear.",
+      "sfx_style": "Whisper effect -> reveal sound -> bright resolve",
+      "hook_duration_s": 3,
+      "opening_frame": "Locked or classified visual element",
+      "best_for": ["educational", "trend_opinion", "case_study"],
+      "backup_for": ["product_demo", "comparison"],
+      "examples_vi": [
+        "Chi 5% doi nhom ap dung dung cach nay — va ho luon di truoc.",
+        "Dieu cac cong ty AI lon khong noi voi ban ve chi phi thuc su.",
+        "Bi mat phia sau quy trinh lam viec cua nhung team hieu qua nhat."
+      ]
+    },
+    {
+      "id": "PROBLEM_AGITATION",
+      "name_vi": "Khuech dai van de",
+      "category": "emotional",
+      "description_vi": "Khong chi neu van de ma dao sau vao noi dau truoc khi reveal giai phap.",
+      "template_vi": "Ban dang danh [X tieng] moi [ngay/tuan] de [viec lap lai]. Do la [Y ngay] moi nam. Ban co the da [ket qua tot hon].",
+      "visual_style": "Clock ticking, so tich luy (gio -> ngay -> tuan). Cost calculator. Negative space growing.",
+      "sfx_style": "Slow ticking -> escalating -> breaking point sound -> release",
+      "hook_duration_s": 5,
+      "opening_frame": "Timer or accumulating counter",
+      "best_for": ["problem_solution", "educational", "comparison"],
+      "backup_for": ["product_demo", "case_study"],
+      "examples_vi": [
+        "Trung binh 1 nhan vien ton 11 tieng/tuan cho meeting. Nhan 50 tuan. Do la gan 3 thang lam viec. Moi nam.",
+        "Moi lan ban tong hop bao cao thu cong = 3 tieng. Moi tuan. 52 tuan. Tinh di.",
+        "Team cua ban dang mat bao nhieu tien vao nhung viec AI co the lam thay?"
+      ]
+    },
+    {
+      "id": "SHOCK_STAT",
+      "name_vi": "Thong ke gay soc",
+      "category": "credibility",
+      "description_vi": "So lieu bat ngo, cu the, va counterintuitive. Con so phai du lon hoac du nho de gay ngac nhien.",
+      "template_vi": "[X%] cua [nhom] dang [thuc te gay soc]. / Chi [X] trong [Y] [nhom] co the [ket qua dang ngac nhien].",
+      "visual_style": "Large percentage/number odometer. Pie chart explosion. Bar graph snap comparison.",
+      "sfx_style": "Build up -> reveal ding -> short pause of disbelief",
+      "hook_duration_s": 3,
+      "opening_frame": "Large number or percentage on screen",
+      "best_for": ["educational", "trend_opinion", "comparison"],
+      "backup_for": ["case_study", "problem_solution"],
+      "examples_vi": [
+        "78% nguoi dung AI chua bao gio thu tinh nang nay.",
+        "Chi 12% doi nhom noi ho hai long voi cach hop hien tai.",
+        "Trung binh moi nhan vien nhan 121 email/ngay. Va doc duoc 23%."
+      ]
+    },
+    {
+      "id": "STORY_OPEN",
+      "name_vi": "Mo dau bang cau chuyen",
+      "category": "narrative",
+      "description_vi": "Keo nguoi xem vao mot tinh huong cu the. Nao nguoi duoc lap trinh de nghe cau chuyen.",
+      "template_vi": "Ngay do, [nhan vat] dang [tinh huong]. Khong ai nghi [dieu bat ngo] co the xay ra. / Toi nho luc [ky uc cu the]...",
+      "visual_style": "Scene setting: date/time stamp. Location indicator. Single character silhouette. Cinematic letterbox.",
+      "sfx_style": "Ambient environmental sound -> story beat music -> momentum build",
+      "hook_duration_s": 5,
+      "opening_frame": "Scene or timestamp setting",
+      "best_for": ["brand_story", "case_study", "educational"],
+      "backup_for": ["problem_solution", "trend_opinion"],
+      "examples_vi": [
+        "Thang 3 nam ngoai, mot cong ty 200 nguoi phai lam lai toan bo quy trinh trong 2 tuan.",
+        "Cuoc hop keo dai 4 tieng. Khong ra duoc quyet dinh nao. Dieu do thay doi moi thu.",
+        "Khi chung toi lan dau thay con so nay, khong ai tin do la that."
+      ]
+    },
+    {
+      "id": "CHALLENGE",
+      "name_vi": "Thu thach / Gamification",
+      "category": "engagement",
+      "description_vi": "Moi nguoi xem tham gia mot thu thach hoac thi nghiem. Tao active participation.",
+      "template_vi": "Thu lam [X] trong [Y ngay/gio] va bao ket qua. / Xem ban co nhan ra [X] khong — cau tra loi o cuoi video.",
+      "visual_style": "Challenge badge/seal animation. Countdown. Interactive-looking UI. Participation counter.",
+      "sfx_style": "Game-like startup sound -> energetic undertone",
+      "hook_duration_s": 3,
+      "opening_frame": "Challenge badge or game UI element",
+      "best_for": ["how_to", "educational", "product_demo"],
+      "backup_for": ["brand_story", "comparison"],
+      "examples_vi": [
+        "Thu ap dung quy tac nay trong 1 tuan va xem team ban thay doi the nao.",
+        "Toi thach ban thu lam bao cao nay theo cach AI — chi can 15 phut.",
+        "Tra loi cau hoi nay truoc khi xem tiep — roi so sanh voi dap an cuoi video."
+      ]
+    },
+    {
+      "id": "LIST_NUMBER",
+      "name_vi": "Danh sach / So diem",
+      "category": "utility",
+      "description_vi": "Nao nguoi thich structure va biet truoc so diem can xem. Tao expectation va completion drive.",
+      "template_vi": "[X] dieu ban can biet ve [chu de]. / [X] ly do [nhom] luon [ket qua]. / [X] buoc de [muc tieu].",
+      "visual_style": "Number/bullet counter visible. Check off animation. Progress through list.",
+      "sfx_style": "Clean intro -> numbered dings for each point -> summary close",
+      "hook_duration_s": 2,
+      "opening_frame": "X/total counter or numbered list preview",
+      "best_for": ["educational", "how_to", "comparison"],
+      "backup_for": ["product_demo", "trend_opinion"],
+      "examples_vi": [
+        "5 cach AI dang thay doi cach doi nhom lam viec — so 3 bat ngo nhat.",
+        "4 ly do bao cao thu cong lang phi tien cua ban.",
+        "3 cong cu mien phi de tu dong hoa 40% cong viec lap lai."
+      ]
+    },
+    {
+      "id": "EMPATHY",
+      "name_vi": "Dong cam / Nhan ra ban than",
+      "category": "emotional",
+      "description_vi": "Mo ta chinh xac cam giac hoac tinh huong ma nguoi xem dang trai qua. Tao 'o, do chinh la minh' moment.",
+      "template_vi": "Neu ban dang cam thay [cam xuc/tinh huong cu the], video nay danh cho ban. / Ban da bao gio [trai nghiem frustrating] chua?",
+      "visual_style": "Intimate close-up text. Warm tones. Conversational feel. Person silhouette.",
+      "sfx_style": "Soft, warm ambient -> personal intimate tone",
+      "hook_duration_s": 3,
+      "opening_frame": "Intimate text or relatable scenario",
+      "best_for": ["brand_story", "problem_solution", "educational"],
+      "backup_for": ["how_to", "case_study"],
+      "examples_vi": [
+        "Neu ban dang cam thay team minh chay nhieu nhung tien it, video nay danh cho ban.",
+        "Ban da bao gio ngoi trong hop ma khong hieu minh dang quyet dinh gi chua?",
+        "Lam viec khong thieu co gang — chi thieu dung cong cu. Nghe quen khong?"
+      ]
+    },
+    {
+      "id": "VISUAL_INTERRUPT",
+      "name_vi": "Cu hich thi giac thuan tuy",
+      "category": "visual",
+      "description_vi": "Khong can text trong 2 giay dau. Chi visual/motion du manh de khien nao phai dung lai phan tich.",
+      "template_vi": "[Khong co text template — visual IS the content]. Sau visual hook moi reveal context.",
+      "visual_style": "Rapid zoom, glitch, unexpected color burst, morphing shapes, particles explode/converge. Full bleed. No text for first 2s.",
+      "sfx_style": "Pure sound design: impact, swoosh, glitch, or complete silence as contrast",
+      "hook_duration_s": 2,
+      "opening_frame": "Pure visual motion — no text for first 2 seconds",
+      "best_for": ["product_demo", "brand_story", "trend_opinion"],
+      "backup_for": ["educational", "case_study"],
+      "examples_vi": [
+        "1 trieu diem du lieu hoi tu thanh 1 con so — khong loi giai thich",
+        "Man hinh split: chaos trai / order phai — roi cat sang san pham",
+        "Glitch animation -> clean UI reveal"
+      ]
+    }
+  ],
+  "content_type_map": {
+    "product_demo": {
+      "desc": "Gioi thieu san pham hoac tinh nang cu the",
+      "best_hooks": ["PATTERN_INTERRUPT", "BOLD_CLAIM", "TRANSFORMATION"],
+      "backup_hooks": ["HOW_TO", "SOCIAL_PROOF", "VISUAL_INTERRUPT"]
+    },
+    "educational": {
+      "desc": "Giai thich khai niem, day kien thuc",
+      "best_hooks": ["CURIOSITY_GAP", "SHOCK_STAT", "CONTRARIAN"],
+      "backup_hooks": ["LIST_NUMBER", "QUESTION", "MISTAKE_WARNING"]
+    },
+    "trend_opinion": {
+      "desc": "Binh luan xu huong, y kien chuyen gia",
+      "best_hooks": ["CONTRARIAN", "BOLD_CLAIM", "SHOCK_STAT"],
+      "backup_hooks": ["QUESTION", "SECRET_INSIDER", "FEAR_LOSS"]
+    },
+    "brand_story": {
+      "desc": "Cau chuyen thuong hieu, gioi thieu KimQ",
+      "best_hooks": ["STORY_OPEN", "EMPATHY", "TRANSFORMATION"],
+      "backup_hooks": ["CHALLENGE", "QUESTION", "PATTERN_INTERRUPT"]
+    },
+    "case_study": {
+      "desc": "Chung minh ket qua, cau chuyen khach hang",
+      "best_hooks": ["TRANSFORMATION", "SOCIAL_PROOF", "SHOCK_STAT"],
+      "backup_hooks": ["BOLD_CLAIM", "STORY_OPEN", "CURIOSITY_GAP"]
+    },
+    "problem_solution": {
+      "desc": "Van de + Giai phap",
+      "best_hooks": ["PROBLEM_AGITATION", "FEAR_LOSS", "MISTAKE_WARNING"],
+      "backup_hooks": ["EMPATHY", "QUESTION", "CONTRARIAN"]
+    },
+    "comparison": {
+      "desc": "So sanh A vs B",
+      "best_hooks": ["CONTRARIAN", "SHOCK_STAT", "QUESTION"],
+      "backup_hooks": ["LIST_NUMBER", "BOLD_CLAIM", "SOCIAL_PROOF"]
+    },
+    "how_to": {
+      "desc": "Huong dan tung buoc",
+      "best_hooks": ["HOW_TO", "LIST_NUMBER", "CHALLENGE"],
+      "backup_hooks": ["PATTERN_INTERRUPT", "QUESTION", "MISTAKE_WARNING"]
+    }
+  }
+}

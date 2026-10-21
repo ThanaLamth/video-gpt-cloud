@@ -1,0 +1,21 @@
+# Python dependencies for KimQ video pipeline
+
+# Rendering
+playwright>=1.40.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# Audio
+pydub>=0.25.1
+soundfile>=0.12.1
+scipy>=1.10.0
+
+# Voice (VoiceMC uses its own venv — see setup/CLOUD_SETUP.md)
+# torch>=2.0.0  # installed in VoiceMC venv
+# torchaudio>=2.0.0
+
+# Subtitles / alignment
+# whisperx>=3.1.1  # optional, for word-level alignment
+
+# Utilities
+requests>=2.31.0

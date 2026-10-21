@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#080808; overflow:hidden; }
+  canvas { display:block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script src="../../scripts/motion.js"></script>
+<script>
+// ─── TIMELINE CONSTANTS ───────────────────────────────────────────
+const DUR = 30;
+const W = 1080, H = 1920;
+
+// Beat timestamps
+const T = {
+  silence_end:   0.50,
+  hook_text_in:  0.50,
+  hook_shake:    1.20,
+  slash_in:      2.50,
+  after_in:      2.80,
+  n8n_in:        4.50,
+  star_in:       5.20,
+  tagline_in:    6.50,
+  nodes_start:   9.50,
+  icons_in:     15.00,
+  ai_glow:      19.00,
+  result_in:    23.00,
+  oss_in:       26.50,
+  cta_in:       28.50,
+};
+
+const GOLD   = '#C9A42A';
+const GOLDL  = '#E8D488';
+const RED    = '#E05A4E';
+const BG     = '#080808';
+const WHITE  = '#F0F0F0';
+const GRAY   = '#666';
+
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+const ctx = canvas.getContext('2d');
+
+// ─── HELPERS ──────────────────────────────────────────────────────
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function ease(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
+function easeOut(t){ return 1-Math.pow(1-t,3); }
+function easeIn(t){ return t*t*t; }
+function spring(t,s=0.4){ return t<=0?0:t>=1?1:1-Math.exp(-12*t)*Math.cos(2*Math.PI*t*s); }
+function prog(t,a,b){ return clamp((t-a)/(b-a),0,1); }
+function alpha(t,a,b,fadein=0.15,fadeout=0.15){
+  const p=prog(t,a,b);
+  if(p<=0||p>=1) return p<=0?0:1;
+  if(p<fadein) return easeOut(p/fadein);
+  if(p>1-fadeout) return easeOut((1-p)/fadeout);
+  return 1;
+}
+
+// ─── DRAW FUNCTIONS ───────────────────────────────────────────────
+function bg(){ ctx.fillStyle=BG; ctx.fillRect(0,0,W,H); }
+
+function drawClock(t){
+  const p = prog(t, T.hook_text_in, T.slash_in);
+  if(p<=0) return;
+  const a = easeOut(clamp(p/0.3,0,1));
+  // Clock circle
+  const cx=W/2, cy=700, r=160;
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.strokeStyle = RED;
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, -Math.PI/2, -Math.PI/2 + 2*Math.PI*clamp(prog(t, T.hook_text_in, T.slash_in-0.3),0,1));
+  ctx.stroke();
+  // Clock hands shaking
+  const shake = p > 0.4 ? Math.sin(t*40)*(1-easeOut(prog(t,T.hook_shake,T.slash_in)))*18 : 0;
+  ctx.translate(cx+shake, cy);
+  ctx.strokeStyle=RED; ctx.lineWidth=10; ctx.lineCap='round';
+  // hour hand
+  ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-80); ctx.stroke();
+  // minute hand  
+  ctx.beginPath(); ctx.moveTo(0,0);
+  const ang = Math.PI/2 * clamp(prog(t,T.hook_text_in,T.slash_in)*3,0,1);
+  ctx.lineTo(Math.cos(ang)*110, -Math.sin(ang)*110+50); ctx.stroke();
+  // center dot
+  ctx.fillStyle=RED; ctx.beginPath(); ctx.arc(0,0,12,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+
+  // "8 GIO" text
+  const ta = easeOut(clamp(prog(t,T.hook_text_in,T.hook_text_in+0.4),0,1));
+  ctx.save();
+  ctx.globalAlpha = ta * a;
+  ctx.font = 'bold 200px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = RED;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('8 GIỜ', W/2, 970);
+  ctx.font = '500 52px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GRAY;
+  ctx.fillText('làm thủ công mỗi ngày', W/2, 1090);
+  ctx.restore();
+}
+
+function drawSlash(t){
+  const p = prog(t, T.slash_in, T.slash_in+0.5);
+  if(p<=0) return;
+  const ep = easeOut(p);
+  ctx.save();
+  ctx.globalAlpha = clamp(ep*2,0,1);
+  ctx.strokeStyle = GOLD;
+  ctx.lineWidth = 18;
+  ctx.lineCap = 'round';
+  // Diagonal slash across screen
+  const x1=W*0.1, y1=H*0.65, x2=W*0.9, y2=H*0.3;
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x1+(x2-x1)*ep, y1+(y2-y1)*ep);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawAfterText(t){
+  const p = spring(prog(t, T.after_in, T.after_in+0.6));
+  if(p<=0) return;
+  const fa = alpha(t, T.after_in, T.n8n_in+0.5, 0.1, 0.3);
+  ctx.save();
+  ctx.globalAlpha = fa;
+  ctx.font = 'bold 200px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GOLD;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.scale(p, p);
+  ctx.fillText('20 PHÚT', W/2/p, 820/p);
+  ctx.restore();
+
+  const ta = easeOut(clamp(prog(t, T.after_in+0.3, T.after_in+0.7),0,1));
+  ctx.save();
+  ctx.globalAlpha = ta * fa;
+  ctx.font = '500 52px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GOLDL;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('cùng việc đó — với n8n', W/2, 980);
+  ctx.restore();
+}
+
+function drawN8nBrand(t){
+  const p = easeOut(prog(t, T.n8n_in, T.n8n_in+0.7));
+  if(p<=0) return;
+  const fa = alpha(t, T.n8n_in, T.nodes_start, 0.15, 0.2);
+  ctx.save();
+  ctx.globalAlpha = p * fa;
+  // n8n logo text
+  ctx.font = 'bold 160px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GOLD;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('n8n', W/2, 680);
+
+  // Star count odometer
+  const starP = easeOut(prog(t, T.star_in, T.star_in+1.2));
+  const starNum = Math.round(starP * 208000);
+  ctx.font = 'bold 72px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GOLDL;
+  ctx.fillText('⭐ ' + starNum.toLocaleString('vi-VN') + ' stars', W/2, 820);
+
+  // Subtitle
+  const tp = easeOut(prog(t, T.n8n_in+0.5, T.n8n_in+1.0));
+  ctx.globalAlpha = tp * fa;
+  ctx.font = '500 46px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = GRAY;
+  ctx.fillText('github.com/n8n-io/n8n', W/2, 920);
+  ctx.restore();
+}
+
+function drawTagline(t){
+  const fa = alpha(t, T.tagline_in, T.nodes_start, 0.2, 0.2);
+  if(fa<=0) return;
+  const lines = [
+    'Tự động hóa quy trình làm việc',
+    'với AI tích hợp sẵn'
+  ];
+  ctx.save();
+  ctx.globalAlpha = fa;
+  lines.forEach((line, i) => {
+    const p = easeOut(prog(t, T.tagline_in + i*0.3, T.tagline_in + i*0.3 + 0.5));
+    ctx.globalAlpha = fa * p;
+    ctx.font = `500 ${i===0?68:72}px "Segoe UI", Arial, sans-serif`;
+    ctx.fillStyle = i===0 ? WHITE : GOLD;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(line, W/2, 760 + i*110);
+  });
+  ctx.restore();
+}
+
+// WORKFLOW NODES
+const NODES = [
+  { label:'Trigger',  icon:'⚡', color:'#4A90D9', x:W/2-360, y:1050 },
+  { label:'AI Agent', icon:'🤖', color:GOLD,      x:W/2-120, y:900  },
+  { label:'Gmail',    icon:'✉',  color:'#E05A4E', x:W/2+140, y:1050 },
+  { label:'Slack',    icon:'#',  color:'#6B4EFF', x:W/2-360, y:1250 },
+  { label:'Database', icon:'⬡',  color:'#2ECC71', x:W/2+140, y:1250 },
+];
+const EDGES = [[0,1],[1,2],[1,3],[1,4]];
+
+function drawNodes(t){
+  const fa = alpha(t, T.nodes_start, T.icons_in, 0.05, 0.2);
+  if(fa<=0) return;
+  ctx.save();
+  ctx.globalAlpha = fa;
+
+  // Draw edges first
+  EDGES.forEach(([a,b], i) => {
+    const p = easeOut(prog(t, T.nodes_start + 0.4 + i*0.4, T.nodes_start + 0.9 + i*0.4));
+    if(p<=0) return;
+    const na=NODES[a], nb=NODES[b];
+    ctx.strokeStyle = 'rgba(201,164,42,0.4)';
+    ctx.lineWidth = 4;
+    ctx.setLineDash([12,8]);
+    ctx.beginPath();
+    ctx.moveTo(na.x, na.y);
+    const mx = na.x + (nb.x-na.x)*p, my = na.y + (nb.y-na.y)*p;
+    ctx.lineTo(mx, my);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // Arrow head at endpoint
+    if(p>0.9){
+      const ang = Math.atan2(nb.y-na.y, nb.x-na.x);
+      ctx.fillStyle='rgba(201,164,42,0.6)';
+      ctx.save(); ctx.translate(mx,my); ctx.rotate(ang);
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-16,-8); ctx.lineTo(-16,8); ctx.fill();
+      ctx.restore();
+    }
+  });
+
+  // Draw nodes
+  NODES.forEach((nd, i) => {
+    const p = spring(prog(t, T.nodes_start + i*0.35, T.nodes_start + i*0.35 + 0.5));
+    if(p<=0) return;
+    const isAI = i===1;
+    const r = isAI ? 78 : 60;
+    ctx.save();
+    ctx.globalAlpha = fa * p;
+    ctx.translate(nd.x, nd.y);
+    ctx.scale(p, p);
+
+    // Glow for AI node
+    if(isAI && t > T.ai_glow){
+      const gp = easeOut(prog(t, T.ai_glow, T.ai_glow+1));
+      const pulse = 0.5 + 0.5*Math.sin((t-T.ai_glow)*4);
+      const grad = ctx.createRadialGradient(0,0,r,0,0,r*2.5);
+      grad.addColorStop(0, `rgba(201,164,42,${0.4*gp*pulse})`);
+      grad.addColorStop(1, 'rgba(201,164,42,0)');
+      ctx.fillStyle=grad;
+      ctx.beginPath(); ctx.arc(0,0,r*2.5,0,Math.PI*2); ctx.fill();
+    }
+
+    // Node circle
+    ctx.fillStyle = nd.color + '22';
+    ctx.strokeStyle = nd.color;
+    ctx.lineWidth = isAI ? 5 : 3;
+    ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2);
+    ctx.fill(); ctx.stroke();
+
+    // Icon
+    ctx.font = `${isAI?42:34}px serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(nd.icon, 0, -6);
+
+    // Label
+    ctx.font = `500 ${isAI?26:22}px "Segoe UI", Arial, sans-serif`;
+    ctx.fillStyle = isAI ? GOLD : WHITE;
+    ctx.fillText(nd.label, 0, r+22);
+
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+function drawIcons(t){
+  const fa = alpha(t, T.icons_in, T.result_in, 0.1, 0.15);
+  if(fa<=0) return;
+
+  // Section title
+  const tp = easeOut(prog(t, T.icons_in, T.icons_in+0.5));
+  ctx.save();
+  ctx.globalAlpha = fa * tp;
+  ctx.font = 'bold 62px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle = WHITE;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('Kéo thả. Không cần code.', W/2, 680);
+  ctx.restore();
+
+  const apps = [
+    {name:'Gmail',   color:'#E05A4E', icon:'✉'},
+    {name:'Slack',   color:'#6B4EFF', icon:'#'},
+    {name:'Sheets',  color:'#2ECC71', icon:'⊞'},
+    {name:'Notion',  color:'#EEEEEE', icon:'N'},
+    {name:'Webhook', color:GOLD,      icon:'⚡'},
+    {name:'ChatGPT', color:'#10A37F', icon:'✦'},
+    {name:'Airtable',color:'#FF6B6B', icon:'⬡'},
+    {name:'Jira',    color:'#4A90D9', icon:'J'},
+  ];
+  const cols=4, rows=2, bw=200, bh=180;
+  const startX = W/2 - (cols*bw)/2 + bw/2;
+  const startY = 820;
+
+  apps.forEach((app, i) => {
+    const col = i%cols, row = Math.floor(i/cols);
+    const p = spring(prog(t, T.icons_in+0.2+i*0.08, T.icons_in+0.7+i*0.08));
+    if(p<=0) return;
+    const x = startX + col*bw, y = startY + row*bh;
+    ctx.save();
+    ctx.globalAlpha = fa * p;
+    ctx.translate(x, y);
+    ctx.scale(p, p);
+    // Box bg
+    ctx.fillStyle = app.color+'18';
+    ctx.strokeStyle = app.color+'66';
+    ctx.lineWidth = 2;
+    roundRect(ctx, -70,-60,140,120,16);
+    ctx.fill(); ctx.stroke();
+    // Icon
+    ctx.font='42px serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(app.icon, 0, -10);
+    ctx.font='500 24px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle=WHITE;
+    ctx.fillText(app.name, 0, 30);
+    ctx.restore();
+  });
+
+  // AI highlight text
+  if(t > T.ai_glow){
+    const ap = easeOut(prog(t, T.ai_glow, T.ai_glow+0.6));
+    const fa2 = alpha(t, T.ai_glow, T.result_in, 0.1, 0.15);
+    ctx.save();
+    ctx.globalAlpha = fa2 * ap;
+    ctx.font = 'bold 56px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle = GOLD;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('Thêm AI vào bất kỳ bước nào', W/2, 1310);
+    ctx.font = '400 44px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle = GOLDL;
+    ctx.fillText('không cần viết code', W/2, 1390);
+    ctx.restore();
+  }
+}
+
+function drawResult(t){
+  const fa = alpha(t, T.result_in, T.oss_in, 0.1, 0.15);
+  if(fa<=0) return;
+  ctx.save();
+  ctx.globalAlpha = fa;
+
+  // Big comparison
+  const items = [
+    {label:'Trước', val:'8 giờ', color:RED},
+    {label:'Với n8n', val:'20 phút', color:GOLD},
+  ];
+  items.forEach((item, i) => {
+    const p = easeOut(prog(t, T.result_in+i*0.4, T.result_in+i*0.4+0.5));
+    ctx.save();
+    ctx.globalAlpha = fa*p;
+    const y = 800 + i*350;
+    ctx.font='500 44px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle=GRAY;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(item.label, W/2, y-40);
+    ctx.font='bold 160px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle=item.color;
+    ctx.fillText(item.val, W/2, y+70);
+    ctx.restore();
+  });
+
+  // Checkmarks
+  const checks = ['Tiết kiệm thời gian','Giảm lỗi con người','Chạy 24/7 tự động'];
+  checks.forEach((c, i) => {
+    const p = easeOut(prog(t, T.result_in+0.9+i*0.25, T.result_in+1.3+i*0.25));
+    if(p<=0) return;
+    ctx.save();
+    ctx.globalAlpha = fa*p;
+    ctx.font='500 42px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle=WHITE;
+    ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText('✓  ' + c, 160, 1570+i*72);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+function drawOSS(t){
+  const fa = alpha(t, T.oss_in, T.cta_in, 0.1, 0.2);
+  if(fa<=0) return;
+  ctx.save();
+  ctx.globalAlpha = fa;
+  const tags = ['Mã nguồn mở', 'Tự host được', 'Không vendor lock-in'];
+  tags.forEach((tag, i) => {
+    const p = easeOut(prog(t, T.oss_in+i*0.2, T.oss_in+i*0.2+0.4));
+    if(p<=0) return;
+    ctx.save();
+    ctx.globalAlpha = fa*p;
+    const x = W/2, y = 800 + i*130;
+    // Pill bg
+    ctx.fillStyle='rgba(201,164,42,0.12)';
+    ctx.strokeStyle='rgba(201,164,42,0.4)';
+    ctx.lineWidth=2;
+    roundRect(ctx, x-220, y-36, 440, 72, 36);
+    ctx.fill(); ctx.stroke();
+    ctx.font='500 40px "Segoe UI", Arial, sans-serif';
+    ctx.fillStyle=GOLDL;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(tag, x, y);
+    ctx.restore();
+  });
+  ctx.restore();
+}
+
+function drawCTA(t){
+  const fa = alpha(t, T.cta_in, DUR+0.5, 0.15, 0);
+  if(fa<=0) return;
+  const p = easeOut(prog(t, T.cta_in, T.cta_in+0.5));
+  ctx.save();
+  ctx.globalAlpha=fa*p;
+  // Gold glow bg
+  const grad=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,500);
+  grad.addColorStop(0,'rgba(201,164,42,0.08)');
+  grad.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
+
+  ctx.font='bold 100px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle=GOLD;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('n8n.io', W/2, 880);
+
+  ctx.font='500 52px "Segoe UI", Arial, sans-serif';
+  ctx.fillStyle=WHITE;
+  ctx.fillText('Thử ngay — miễn phí', W/2, 1010);
+  ctx.restore();
+}
+
+function roundRect(ctx, x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+}
+
+// ─── CURSOR KNOTS (HAND) ──────────────────────────────────────────
+// Inspect positions via browser DevTools before hardcoding
+const CURSOR_KNOTS = [
+  {t:9.5,  x:W/2-360, y:1050},   // Trigger node
+  {t:10.5, x:W/2-120, y:900},    // AI Agent node
+  {t:11.8, x:W/2+140, y:1050},   // Gmail node
+  {t:13.0, x:W/2-360, y:1250},   // Slack node
+  {t:14.2, x:W/2+140, y:1250},   // DB node
+  {t:15.5, x:W/2,     y:900},    // drag icon area
+];
+
+function drawCursor(t){
+  if(t < T.nodes_start || t > T.icons_in+1) return;
+  // Interpolate between knots
+  let knot = CURSOR_KNOTS[0];
+  for(let i=1;i<CURSOR_KNOTS.length;i++){
+    if(t>=CURSOR_KNOTS[i-1].t && t<=CURSOR_KNOTS[i].t){
+      const p=easeOut(prog(t,CURSOR_KNOTS[i-1].t,CURSOR_KNOTS[i].t));
+      knot={
+        x: CURSOR_KNOTS[i-1].x + (CURSOR_KNOTS[i].x-CURSOR_KNOTS[i-1].x)*p,
+        y: CURSOR_KNOTS[i-1].y + (CURSOR_KNOTS[i].y-CURSOR_KNOTS[i-1].y)*p,
+      };
+      break;
+    }
+    if(t>CURSOR_KNOTS[i].t) knot=CURSOR_KNOTS[i];
+  }
+  ctx.save();
+  ctx.globalAlpha=0.9;
+  ctx.font='44px serif';
+  ctx.textBaseline='top'; ctx.textAlign='left';
+  ctx.fillText('👆', knot.x-10, knot.y-44);
+  ctx.restore();
+}
+
+// ─── SEEK FUNCTION ────────────────────────────────────────────────
+function __seek(t){
+  bg();
+  // Scene routing
+  if(t < T.slash_in){
+    drawClock(t);
+  } else if(t < T.n8n_in){
+    // Show fading clock + slash + after text
+    drawClock(t);
+    drawSlash(t);
+    drawAfterText(t);
+  } else if(t < T.nodes_start){
+    drawAfterText(t);
+    drawN8nBrand(t);
+    drawTagline(t);
+  } else if(t < T.icons_in){
+    drawNodes(t);
+    drawCursor(t);
+  } else if(t < T.result_in){
+    drawIcons(t);
+  } else if(t < T.oss_in){
+    drawResult(t);
+  } else if(t < T.cta_in){
+    drawOSS(t);
+  } else {
+    drawCTA(t);
+  }
+}
+
+window.__ready  = Promise.resolve();
+window.__meta   = { dur: DUR };
+window.__seek   = __seek;
+window.__motion = function(t0,t1){
+  const dx=(t1-t0)*W*2;
+  return dx;
+};
+</script>
+</body>
+</html>
